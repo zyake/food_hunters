@@ -30,7 +30,7 @@ public class MapManager {
         this.map = map;
     }
 
-    public void setCurrent(Location loc, String title) {
+    public void replaceCurrent(Location loc, String title) {
         if (currentMarker != null) {
             currentMarker.remove();
             currentMarker = null;
@@ -45,13 +45,14 @@ public class MapManager {
     public void replaceMarkers(List<GeoEntity> entities) {
         for (Marker loc : currentLocations) {
             loc.remove();
-            currentLocations.clear();
         }
+        currentLocations.clear();
 
         for (GeoEntity entity : entities) {
             LatLng latLng = LatLngs.fromEntity(entity);
             Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(entity.getName()));
             entity.configMarker(marker);
+            currentLocations.add(marker);
         }
     }
 }

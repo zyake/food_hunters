@@ -7,9 +7,12 @@ import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
+import jp.co.aainc.training_camp.team_mizuno.food_hunters.geo.LatLngs;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.managers.MapManager;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.RestaurantSearcher;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.RestaurantSearcherFactory;
@@ -58,7 +61,7 @@ public class MapsActivity extends FragmentActivity {
         }
     }
 
-    private void startAsync(Location loc) {
+    private void startAsync(LatLng latLng) {
         isSearching = true;
         RestaurantSearchAsyncTask asyncTask = new RestaurantSearchAsyncTask() {
             @Override
@@ -68,20 +71,28 @@ public class MapsActivity extends FragmentActivity {
             }
         };
 
-        asyncTask.execute(new SearchRequest(loc.getLatitude(), loc.getLongitude()));
+        asyncTask.execute(new SearchRequest(latLng.latitude, latLng.longitude));
     }
 
     private void registerLocationListenerIfNeeded() {
         Location lastKnownLocation = locManager.getLastKnownLocation(GPS_PROVIDER);
-        mapManager.setCurrent(lastKnownLocation, MARKER_TITLE);
-        startAsync(lastKnownLocation);
+        mapManager.replaceCurrent(lastKnownLocation, MARKER_TITLE);
+        map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                if (!isSearching) {
+                   startAsync(cameraPosition.target);
+                }
+            }
+        });
+        startAsync(LatLngs.fromLocation(lastKnownLocation));
         locManager.requestLocationUpdates(GPS_PROVIDER, 1000, 5,
             new DefaultLocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    mapManager.setCurrent(location, MARKER_TITLE);
+                    mapManager.replaceCurrent(location, MARKER_TITLE);
                     if (!isSearching) {
-                        startAsync(location);
+                        startAsync(LatLngs.fromLocation(location));
                     }
                 }
         });
