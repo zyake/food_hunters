@@ -1,4 +1,4 @@
-package team_mizuno.training_camp.aainc.co.jp.food_hunter;
+package jp.co.aainc.training_camp.team_mizuno.food_hunters;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

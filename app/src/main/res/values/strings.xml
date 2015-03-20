@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">food_hunter</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">food_hunters</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
