@@ -4,15 +4,19 @@ import android.location.Location;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import jp.co.aainc.training_camp.team_mizuno.food_hunters.geo.GeoEntity;
-import jp.co.aainc.training_camp.team_mizuno.food_hunters.geo.LatLngs;
+import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.LatLngs;
+import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.Restaurant;
 
 public class MapManager {
 
@@ -22,12 +26,29 @@ public class MapManager {
 
     private final List<Marker> currentLocations = new ArrayList<>();
 
+    private final Map<Marker, Restaurant> markerRestaurantMap = new HashMap<>();
+
     public MapManager(GoogleMap map) {
-        this.map = map;
+        setMap(map);
     }
 
-    public void setMap(GoogleMap map) {
+    public void setMap(final GoogleMap map) {
+        if (map != null) {
+            map.setOnMarkerClickListener(null);
+        }
         this.map = map;
+        currentLocations.clear();
+        currentMarker = null;
+        markerRestaurantMap.clear();
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Restaurant restaurant = markerRestaurantMap.get(marker);
+                map.addGroundOverlay(new GroundOverlayOptions().position(marker.getPosition(), 3, 3).image(BitmapDescriptorFactory.defaultMarker()));
+                return false;
+            }
+        });
     }
 
     public void replaceCurrent(Location loc, String title) {
@@ -42,16 +63,16 @@ public class MapManager {
         currentMarker = map.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
-    public void replaceMarkers(List<GeoEntity> entities) {
+    public void replaceMarkers(List<Restaurant> restaurants) {
         for (Marker loc : currentLocations) {
             loc.remove();
         }
         currentLocations.clear();
 
-        for (GeoEntity entity : entities) {
-            LatLng latLng = LatLngs.fromEntity(entity);
+        for (Restaurant entity : restaurants) {
+            LatLng latLng = entity.toLatLng();
             Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(entity.getName()));
-            entity.configMarker(marker);
+            markerRestaurantMap.put(marker, entity);
             currentLocations.add(marker);
         }
     }

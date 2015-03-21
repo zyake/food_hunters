@@ -12,10 +12,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-import jp.co.aainc.training_camp.team_mizuno.food_hunters.geo.LatLngs;
+import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.LatLngs;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.managers.MapManager;
-import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.RestaurantSearcher;
-import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.RestaurantSearcherFactory;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.SearchRequest;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.tasks.RestaurantSearchAsyncTask;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.DefaultLocationListener;
@@ -31,8 +29,6 @@ public class MapsActivity extends FragmentActivity {
     private LocationManager locManager;
 
     private MapManager mapManager;
-
-    private RestaurantSearcher searcher = RestaurantSearcherFactory.newSearcher();
 
     private boolean isSearching = false;
 
@@ -77,6 +73,7 @@ public class MapsActivity extends FragmentActivity {
     private void registerLocationListenerIfNeeded() {
         Location lastKnownLocation = locManager.getLastKnownLocation(GPS_PROVIDER);
         mapManager.replaceCurrent(lastKnownLocation, MARKER_TITLE);
+
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
@@ -85,7 +82,9 @@ public class MapsActivity extends FragmentActivity {
                 }
             }
         });
+
         startAsync(LatLngs.fromLocation(lastKnownLocation));
+
         locManager.requestLocationUpdates(GPS_PROVIDER, 1000, 5,
             new DefaultLocationListener() {
                 @Override

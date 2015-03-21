@@ -45,7 +45,8 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
     private static class GurunabiAPIHandler extends DefaultHandler {
 
         private static final Set<String> TARGET_NAMES = Collections.unmodifiableSet(new HashSet<>(
-                Arrays.asList("name", "latitude", "longitude")
+                Arrays.asList("name", "latitude", "longitude", "category", "shop_image1",
+                        "qrcode", "opentime", "holiday", "pr_short")
         ));
 
         private List<Restaurant> restaurants = new ArrayList<>();
@@ -59,6 +60,18 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
         private double lat;
 
         private double log;
+
+        private String category;
+
+        private String shopImage;
+
+        private String qrCode;
+
+        private String opentime;
+
+        private String holiday;
+
+        private String prShort;
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -82,7 +95,8 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
         public void endElement(String uri, String localName, String qName) throws SAXException {
             switch (tagStack.pop()) {
                 case "rest":
-                    restaurants.add(new Restaurant(lat, log, restaurantName));
+                    restaurants.add(new Restaurant(lat, log, restaurantName, category, shopImage,
+                            qrCode, opentime, holiday, prShort));
                 break;
 
                 case "name":
@@ -97,6 +111,31 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
                 case "longitude":
                     log = Double.parseDouble(textBuilder.toString());
+                break;
+
+                case "category":
+                    category = textBuilder.toString();
+                break;
+
+                case "shop_image1":
+                    shopImage = textBuilder.toString();
+                break;
+
+                case "qrcode":
+                    qrCode = textBuilder.toString();
+                break;
+
+                case "opentime":
+                    opentime = textBuilder.toString();
+                break;
+
+                case "holiday":
+                    holiday = textBuilder.toString();
+                break;
+
+                case "pr_short":
+                    prShort = textBuilder.toString();
+                break;
             }
 
             textBuilder = new StringBuilder();
