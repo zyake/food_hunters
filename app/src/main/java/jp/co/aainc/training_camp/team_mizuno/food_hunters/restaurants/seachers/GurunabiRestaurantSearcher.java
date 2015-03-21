@@ -21,7 +21,7 @@ import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.Sax;
 
 public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
-    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=3&hit_per_page=100";
+    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=1&hit_per_page=3";
 
     @Override
     public List<Restaurant> searchRestaurants(SearchRequest request) {

@@ -1,5 +1,8 @@
 package jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants;
 
+import android.location.Location;
+import android.location.LocationManager;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class Restaurant {
@@ -80,5 +83,12 @@ public class Restaurant {
 
     public String getUrlMobile() {
         return urlMobile;
+    }
+
+    public Location toLocation() {
+        Location location = new Location(LocationManager.GPS_PROVIDER);
+        location.setLatitude(getLat());
+        location.setLongitude(getLog());
+        return location;
     }
 }
