@@ -21,7 +21,7 @@ import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.Sax;
 
 public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
-    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=3&hit_per_page=100";
+    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=3&hit_per_page=100&input_coordinates_mode=2";
 
     @Override
     public List<Restaurant> searchRestaurants(SearchRequest request) {
@@ -46,7 +46,7 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
         private static final Set<String> TARGET_NAMES = Collections.unmodifiableSet(new HashSet<>(
                 Arrays.asList("name", "latitude", "longitude", "category", "shop_image1",
-                        "qrcode", "opentime", "holiday", "pr_short")
+                        "qrcode", "opentime", "holiday", "pr_short", "url_mobile")
         ));
 
         private List<Restaurant> restaurants = new ArrayList<>();
@@ -73,6 +73,8 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
         private String prShort = "";
 
+        private String urlMobile = "";
+
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             tagStack.push(localName);
@@ -96,7 +98,7 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
             switch (tagStack.pop()) {
                 case "rest":
                     restaurants.add(new Restaurant(lat, log, restaurantName, category, shopImage,
-                            qrCode, opentime, holiday, prShort));
+                            qrCode, opentime, holiday, prShort, urlMobile));
                 break;
 
                 case "name":
@@ -136,6 +138,9 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
                 case "pr_short":
                     prShort = filterNoise(textBuilder);
                 break;
+
+                case "url_mobile":
+                    urlMobile = textBuilder.toString();
             }
 
             textBuilder = new StringBuilder();

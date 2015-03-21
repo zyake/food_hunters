@@ -32,8 +32,6 @@ public class MapManager {
             ;
     private GoogleMap map;
 
-    private Marker currentMarker;
-
     private Marker openedMarker;
 
     private final List<Marker> currentLocations = new ArrayList<>();
@@ -50,8 +48,8 @@ public class MapManager {
             map.setOnMarkerClickListener(null);
         }
         this.map = map;
+        map.setMyLocationEnabled(true);
         currentLocations.clear();
-        currentMarker = null;
         markerRestaurantMap.clear();
 
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -84,15 +82,9 @@ public class MapManager {
     }
 
     public void replaceCurrent(Location loc, String title) {
-        if (currentMarker != null) {
-            currentMarker.remove();
-            currentMarker = null;
-        }
-
         LatLng latLng = LatLngs.fromLocation(loc);
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         map.animateCamera(CameraUpdateFactory.zoomTo(15));
-        currentMarker = map.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
     public void replaceMarkers(List<Restaurant> restaurants) {

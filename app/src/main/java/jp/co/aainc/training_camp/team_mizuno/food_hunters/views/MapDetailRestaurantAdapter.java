@@ -1,5 +1,7 @@
 package jp.co.aainc.training_camp.team_mizuno.food_hunters.views;
 
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +55,9 @@ public class MapDetailRestaurantAdapter extends BaseAdapter {
     }
 
     private void modifyTextContents(View newView, Restaurant item) {
+        Spanned nameHtml = Html.fromHtml("飲食店名: <a href=\"" + item.getUrlMobile() + "\">" + item.getName() + "<a/>");
         new TextViewHelper(newView)
-            .setText(R.id.my_view_item_name, "飲食店名: " + item.getName())
+            .setLinkText(R.id.my_view_item_name, nameHtml)
             .setText(R.id.my_view_item_category, "カテゴリ: " + item.getCategory())
             .setText(R.id.my_view_item_pr, "説明: " + item.getPrShort())
             .setText(R.id.my_view_item_opentime, "営業時間: " + item.getOpenTime())
