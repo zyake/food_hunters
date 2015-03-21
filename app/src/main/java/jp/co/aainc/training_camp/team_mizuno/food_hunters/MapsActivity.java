@@ -33,6 +33,8 @@ import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.LatLngs;
 
 import static android.location.LocationManager.GPS_PROVIDER;
 
+import android.content.Intent;
+
 public class MapsActivity extends ActionBarActivity {
 
     private static final String MARKER_TITLE = "現在位置";
@@ -84,6 +86,10 @@ public class MapsActivity extends ActionBarActivity {
                 getFragmentManager().beginTransaction().hide(rankingFragment).commit();
                 getFragmentManager().beginTransaction().show(historyFragment).commit();
                 break;
+            case 3:
+                Intent intent = new Intent();
+                intent.setClassName("jp.co.aainc.training_camp.team_mizuno.food_hunters", "jp.co.aainc.training_camp.team_mizuno.food_hunters.QRCodeActivity");
+                startActivity(intent);
         }
 
 

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
 public class HistoryFragment extends Fragment {
 
     private String TAG = "HistoryFragment";
@@ -19,8 +21,19 @@ public class HistoryFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
         Log.i(TAG, "Added");
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View view =  inflater.inflate(R.layout.fragment_history, container, false);
+
+        String[] members = { "お店", "お店", "kacchi0516", "kobashinG",
+                "seit", "kei_i_t", "furusin_oriver" };
+        ListView list = (ListView)view.findViewById(R.id.history_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_expandable_list_item_1, members);
+
+        list.setAdapter(adapter);
+
+        return view;
     }
+
     /*
 
     @Override
