@@ -1,0 +1,47 @@
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/jp.co.aainc.training_camp.team_mizuno.food_hunters"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dip">
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/jp.co.aainc.training_camp.team_mizuno.food_hunters"
+        android:id="@+id/my_view_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/jp.co.aainc.training_camp.team_mizuno.food_hunters"
+        android:id="@+id/my_view_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/jp.co.aainc.training_camp.team_mizuno.food_hunters"
+        android:id="@+id/my_view_item_pr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/jp.co.aainc.training_camp.team_mizuno.food_hunters"
+        android:id="@+id/my_view_item_opentime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/jp.co.aainc.training_camp.team_mizuno.food_hunters"
+        android:id="@+id/my_view_item_holiday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </TextView>
+
+</LinearLayout>

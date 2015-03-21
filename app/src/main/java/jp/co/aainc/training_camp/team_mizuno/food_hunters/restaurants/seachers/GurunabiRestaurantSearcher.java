@@ -126,7 +126,7 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
                 break;
 
                 case "opentime":
-                    opentime = textBuilder.toString();
+                    opentime = filterNoise(textBuilder);
                 break;
 
                 case "holiday":
@@ -134,11 +134,16 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
                 break;
 
                 case "pr_short":
-                    prShort = textBuilder.toString();
+                    prShort = filterNoise(textBuilder);
                 break;
             }
 
             textBuilder = new StringBuilder();
+        }
+
+        private String filterNoise(StringBuilder builder) {
+            String text = builder.toString();
+            return text.replaceAll("<br/>", "").replaceAll("null", "");
         }
     }
 }

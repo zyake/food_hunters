@@ -2,6 +2,10 @@ package jp.co.aainc.training_camp.team_mizuno.food_hunters.managers;
 
 import android.content.Context;
 import android.location.Location;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,12 +16,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jp.co.aainc.training_camp.team_mizuno.food_hunters.R;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.Restaurant;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.LatLngs;
+import jp.co.aainc.training_camp.team_mizuno.food_hunters.views.MapDetailRestaurantAdapter;
 
 public class MapManager {
 
@@ -26,6 +33,8 @@ public class MapManager {
     private GoogleMap map;
 
     private Marker currentMarker;
+
+    private Marker openedMarker;
 
     private final List<Marker> currentLocations = new ArrayList<>();
 
@@ -49,10 +58,27 @@ public class MapManager {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Restaurant restaurant = markerRestaurantMap.get(marker);
+                if (restaurant == null) {
+                    return false;
+                }
+
+                if (openedMarker != null) {
+                    openedMarker.remove();
+                }
+
                 IconGenerator generator = new IconGenerator(context);
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View newView = inflater.inflate(R.layout.sample_my_view, null);
+                ListView listView = (ListView) newView.findViewById(R.id.detailList);
+                ListAdapter adapter = new MapDetailRestaurantAdapter(Arrays.asList(restaurant), inflater);
+                listView.setAdapter(adapter);
+                generator.setContentView(newView);
+
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(generator.makeIcon(restaurant.getName())));
 
-                return false;
+                openedMarker = marker;
+
+                return true;
             }
         });
     }
