@@ -21,7 +21,7 @@ import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.Sax;
 
 public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
-    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=3&hit_per_page=100";
+    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=1&hit_per_page=3";
 
     @Override
     public List<Restaurant> searchRestaurants(SearchRequest request) {
@@ -45,8 +45,8 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
     private static class GurunabiAPIHandler extends DefaultHandler {
 
         private static final Set<String> TARGET_NAMES = Collections.unmodifiableSet(new HashSet<>(
-                Arrays.asList("name", "latitude", "longitude", "category", "shop_image1",
-                        "qrcode", "opentime", "holiday", "pr_short")
+                Arrays.asList("name", "latitude_wgs84", "longitude_wgs84", "category", "shop_image1",
+                        "qrcode", "opentime", "holiday", "pr_short", "url_mobile")
         ));
 
         private List<Restaurant> restaurants = new ArrayList<>();
@@ -61,17 +61,19 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
         private double log;
 
-        private String category;
+        private String category = "";
 
-        private String shopImage;
+        private String shopImage = "";
 
-        private String qrCode;
+        private String qrCode = "";
 
-        private String opentime;
+        private String opentime = "";
 
-        private String holiday;
+        private String holiday = "";
 
-        private String prShort;
+        private String prShort = "";
+
+        private String urlMobile = "";
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -96,7 +98,7 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
             switch (tagStack.pop()) {
                 case "rest":
                     restaurants.add(new Restaurant(lat, log, restaurantName, category, shopImage,
-                            qrCode, opentime, holiday, prShort));
+                            qrCode, opentime, holiday, prShort, urlMobile));
                 break;
 
                 case "name":
@@ -105,11 +107,11 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
                     }
                 break;
 
-                case "latitude":
+                case "latitude_wgs84":
                     lat = Double.parseDouble(textBuilder.toString());
                 break;
 
-                case "longitude":
+                case "longitude_wgs84":
                     log = Double.parseDouble(textBuilder.toString());
                 break;
 
@@ -136,6 +138,9 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
                 case "pr_short":
                     prShort = filterNoise(textBuilder);
                 break;
+
+                case "url_mobile":
+                    urlMobile = textBuilder.toString();
             }
 
             textBuilder = new StringBuilder();

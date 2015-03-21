@@ -1,5 +1,8 @@
 package jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants;
 
+import android.location.Location;
+import android.location.LocationManager;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class Restaurant {
@@ -22,8 +25,10 @@ public class Restaurant {
 
     private final String prShort;
 
+    private final String urlMobile;
+
     public Restaurant(double lat, double log, String name, String category, String shopImageUrl,
-                      String qrCode, String openTime, String holiday, String prShort) {
+                      String qrCode, String openTime, String holiday, String prShort, String urlMobile) {
         this.lat = lat;
         this.log = log;
         this.name = name;
@@ -33,6 +38,7 @@ public class Restaurant {
         this.openTime = openTime;
         this.holiday = holiday;
         this.prShort = prShort;
+        this.urlMobile = urlMobile;
     }
 
     public double getLat() {
@@ -73,5 +79,16 @@ public class Restaurant {
 
     public LatLng toLatLng() {
         return new LatLng(getLat(), getLog());
+    }
+
+    public String getUrlMobile() {
+        return urlMobile;
+    }
+
+    public Location toLocation() {
+        Location location = new Location(LocationManager.GPS_PROVIDER);
+        location.setLatitude(getLat());
+        location.setLongitude(getLog());
+        return location;
     }
 }
