@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">food_hunters</string>
     <string name="title_activity_maps">Map</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="drawer_menu_titles">
+        <item>ランキング</item>
+        <item>履歴</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

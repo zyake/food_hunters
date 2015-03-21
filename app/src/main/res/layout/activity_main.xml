@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.toolbartest.MainActivity" >
+
+    <!-- ToolBarを定義 -->
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize" >
+
+    </android.support.v7.widget.Toolbar>
+
+    <!-- DrawerLayoutを定義 -->
+    <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_below="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        <!-- 本体部  -->
+        <FrameLayout
+                android:id="@+id/body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                      xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                      android:layout_height="match_parent" android:id="@+id/map" tools:context=".MapsActivity"
+                      android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+        </FrameLayout>
+
+        <!-- SlideMenu部  -->
+        <ListView
+                android:id="@+id/slide_menu"
+                android:orientation="vertical"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@android:color/white" >
+        </ListView>
+    </android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>
