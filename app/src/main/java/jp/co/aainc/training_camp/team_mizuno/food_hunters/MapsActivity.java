@@ -51,7 +51,7 @@ public class MapsActivity extends FragmentActivity {
         if (map == null) {
             map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
             if (mapManager == null) {
-                mapManager = new MapManager(map);
+                mapManager = new MapManager(map, this);
             }
             mapManager.setMap(map);
         }
