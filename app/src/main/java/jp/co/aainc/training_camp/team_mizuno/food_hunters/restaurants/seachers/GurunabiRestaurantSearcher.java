@@ -61,17 +61,17 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
         private double log;
 
-        private String category;
+        private String category = "";
 
-        private String shopImage;
+        private String shopImage = "";
 
-        private String qrCode;
+        private String qrCode = "";
 
-        private String opentime;
+        private String opentime = "";
 
-        private String holiday;
+        private String holiday = "";
 
-        private String prShort;
+        private String prShort = "";
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
