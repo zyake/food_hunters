@@ -8,4 +8,8 @@
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_score_ranks">ScoreRanksActivity</string>
+
+    <string name="select_genre">ジャンルを選択</string>
+    <string name="select_area">地域を選択</string>
 </resources>

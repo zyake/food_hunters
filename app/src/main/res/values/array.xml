@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string-array name="genre">
+            <item>ジャンル指定なし</item>
+            <item>和食</item>
+            <item>中華</item>
+            <item>イタリアン</item>
+            <item>フレンチ</item>
+            <item>洋食</item>
+            <item>カフェ</item>
+            <item>エスニック</item>
+        </string-array>
+        <string-array name="area">
+            <item>地域指定なし</item>
+            <item>渋谷</item>
+            <item>恵比寿</item>
+            <item>目黒</item>
+            <item>新宿</item>
+            <item>品川</item>
+            <item>銀座</item>
+            <item>有楽町</item>
+            <item>新橋</item>
+        </string-array>
+    </resources>
