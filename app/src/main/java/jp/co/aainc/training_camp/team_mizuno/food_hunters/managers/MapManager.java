@@ -1,7 +1,9 @@
 package jp.co.aainc.training_camp.team_mizuno.food_hunters.managers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListAdapter;
@@ -28,8 +30,8 @@ import jp.co.aainc.training_camp.team_mizuno.food_hunters.views.MapDetailRestaur
 
 public class MapManager {
 
-    private final Context context
-            ;
+    private final Context context;
+
     private GoogleMap map;
 
     private Marker openedMarker;
@@ -60,16 +62,23 @@ public class MapManager {
                     return false;
                 }
 
+                if (openedMarker != null && openedMarker.getPosition().equals(marker.getPosition())) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(restaurant.getUrlMobile()));
+                    context.startActivity(browserIntent);
+                    return false;
+                }
+
                 if (openedMarker != null) {
                     openedMarker.remove();
                 }
 
-                IconGenerator generator = new IconGenerator(context);
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View newView = inflater.inflate(R.layout.sample_my_view, null);
                 ListView listView = (ListView) newView.findViewById(R.id.detailList);
                 ListAdapter adapter = new MapDetailRestaurantAdapter(Arrays.asList(restaurant), inflater);
                 listView.setAdapter(adapter);
+
+                IconGenerator generator = new IconGenerator(context);
                 generator.setContentView(newView);
 
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(generator.makeIcon(restaurant.getName())));
