@@ -21,7 +21,7 @@ import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.Sax;
 
 public class GurunabiRestaurantSearcher implements RestaurantSearcher {
 
-    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=3&hit_per_page=100&input_coordinates_mode=2";
+    private static final String SEARCH_URL = "http://api.gnavi.co.jp/ver2/RestSearchAPI/?keyid=2621e4dd2b1d9e2856ae7ff055a8d25e&latitude=%f&longitude=%f&range=3&hit_per_page=100";
 
     @Override
     public List<Restaurant> searchRestaurants(SearchRequest request) {
@@ -45,7 +45,7 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
     private static class GurunabiAPIHandler extends DefaultHandler {
 
         private static final Set<String> TARGET_NAMES = Collections.unmodifiableSet(new HashSet<>(
-                Arrays.asList("name", "latitude", "longitude", "category", "shop_image1",
+                Arrays.asList("name", "latitude_wgs84", "longitude_wgs84", "category", "shop_image1",
                         "qrcode", "opentime", "holiday", "pr_short", "url_mobile")
         ));
 
@@ -107,11 +107,11 @@ public class GurunabiRestaurantSearcher implements RestaurantSearcher {
                     }
                 break;
 
-                case "latitude":
+                case "latitude_wgs84":
                     lat = Double.parseDouble(textBuilder.toString());
                 break;
 
-                case "longitude":
+                case "longitude_wgs84":
                     log = Double.parseDouble(textBuilder.toString());
                 break;
 
