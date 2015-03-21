@@ -72,7 +72,11 @@ public class MapsActivity extends FragmentActivity {
 
     private void registerLocationListenerIfNeeded() {
         Location lastKnownLocation = locManager.getLastKnownLocation(GPS_PROVIDER);
-        mapManager.replaceCurrent(lastKnownLocation, MARKER_TITLE);
+        if (lastKnownLocation != null) {
+            mapManager.replaceCurrent(lastKnownLocation, MARKER_TITLE);
+        } else {
+            mapManager.replaceCurrent(new Location(GPS_PROVIDER), MARKER_TITLE);
+        }
 
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
