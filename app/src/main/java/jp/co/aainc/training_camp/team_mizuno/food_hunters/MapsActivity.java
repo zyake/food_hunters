@@ -4,7 +4,8 @@ import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -36,6 +37,9 @@ public class MapsActivity extends ActionBarActivity {
     private static final String MARKER_TITLE = "現在位置";
 
     private GoogleMap map;
+    private SupportMapFragment mapFragment;
+    private RankingFragment rankingFragment;
+    private HistoryFragment historyFragment;
 
     private LocationManager locManager;
 
@@ -58,9 +62,34 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     private void selectItem(int position) {
+
+        Log.i(TAG, "Select Item Position : " + position);
+
+        switch (position)
+        {
+            case 0:
+                getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
+                getFragmentManager().beginTransaction().hide(rankingFragment).commit();
+                getFragmentManager().beginTransaction().hide(historyFragment).commit();
+                break;
+            case 1:
+                getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                getFragmentManager().beginTransaction().show(rankingFragment).commit();
+                getFragmentManager().beginTransaction().hide(historyFragment).commit();
+
+                break;
+            case 2:
+                getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                getFragmentManager().beginTransaction().hide(rankingFragment).commit();
+                getFragmentManager().beginTransaction().show(historyFragment).commit();
+                break;
+        }
+
+
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
+
     }
 
     @Override
@@ -71,6 +100,7 @@ public class MapsActivity extends ActionBarActivity {
         setUpDrawer();
         setUpMapIfNeeded();
         registerLocationListenerIfNeeded();
+        addFragments();
     }
 
     @Override
@@ -95,6 +125,27 @@ public class MapsActivity extends ActionBarActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void addFragments() {
+        Bundle bundle = new Bundle();
+        historyFragment = new HistoryFragment();
+        historyFragment.setArguments(bundle);
+
+        // フラグメントをアクティビティに追加する FragmentTransaction を利用する
+        FragmentManager manager = getFragmentManager();
+
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.container, historyFragment, "history_fragment");
+        transaction.commit();
+
+        rankingFragment = new RankingFragment();
+        rankingFragment.setArguments(bundle);
+
+        transaction = manager.beginTransaction();
+        transaction.add(R.id.container, rankingFragment, "ranking_fragment");
+        transaction.commit();
+
     }
 
     private void setUpDrawer() {
@@ -133,7 +184,7 @@ public class MapsActivity extends ActionBarActivity {
                 // ActionBarDrawerToggleクラス内の同メソッドにてアイコンのアニメーションの処理をしている。
                 // overrideするときは気を付けること。
                 super.onDrawerSlide(drawerView, slideOffset);
-                Log.i(TAG, "onDrawerSlide : " + slideOffset);
+//                Log.i(TAG, "onDrawerSlide : " + slideOffset);
             }
 
             @Override
@@ -141,7 +192,7 @@ public class MapsActivity extends ActionBarActivity {
                 // 表示済み、閉じ済みの状態：0
                 // ドラッグ中状態:1
                 // ドラッグを放した後のアニメーション中：2
-                Log.i(TAG, "onDrawerStateChanged  new state : " + newState);
+//                Log.i(TAG, "onDrawerStateChanged  new state : " + newState);
             }
         };
 
@@ -155,7 +206,8 @@ public class MapsActivity extends ActionBarActivity {
 
     private void setUpMapIfNeeded() {
         if (map == null) {
-            map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            map = mapFragment.getMap();
             if (mapManager == null) {
                 mapManager = new MapManager(map);
             }

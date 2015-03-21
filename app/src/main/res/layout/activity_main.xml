@@ -22,6 +22,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/container"
+                android:background="@android:color/white" />
+
         <!-- 本体部  -->
         <FrameLayout
                 android:id="@+id/body"
