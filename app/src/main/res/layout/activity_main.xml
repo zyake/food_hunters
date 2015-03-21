@@ -10,8 +10,7 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize" >
+            android:background="#ff7355"            android:minHeight="?attr/actionBarSize">
 
     </android.support.v7.widget.Toolbar>
 
@@ -26,8 +25,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:id="@+id/container"
-                android:background="@android:color/white" />
+                android:id="@+id/container_ranking"
+                android:background="@android:color/transparent" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/container_history"
+                android:background="@android:color/transparent" />
 
         <!-- 本体部  -->
         <FrameLayout
@@ -48,7 +54,7 @@
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:background="@android:color/white" >
+                android:background="#dddddd" >
         </ListView>
     </android.support.v4.widget.DrawerLayout>
 

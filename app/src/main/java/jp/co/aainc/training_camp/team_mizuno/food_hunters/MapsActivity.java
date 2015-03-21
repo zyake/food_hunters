@@ -79,7 +79,6 @@ public class MapsActivity extends ActionBarActivity {
                 getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                 getFragmentManager().beginTransaction().show(rankingFragment).commit();
                 getFragmentManager().beginTransaction().hide(historyFragment).commit();
-
                 break;
             case 2:
                 getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
@@ -143,14 +142,14 @@ public class MapsActivity extends ActionBarActivity {
         FragmentManager manager = getFragmentManager();
 
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.container, historyFragment, "history_fragment");
+        transaction.add(R.id.container_history, historyFragment, "history_fragment");
         transaction.commit();
 
         rankingFragment = new RankingFragment();
         rankingFragment.setArguments(bundle);
 
         transaction = manager.beginTransaction();
-        transaction.add(R.id.container, rankingFragment, "ranking_fragment");
+        transaction.add(R.id.container_ranking, rankingFragment, "ranking_fragment");
         transaction.commit();
 
     }

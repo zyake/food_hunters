@@ -21,10 +21,11 @@ public class HistoryFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
         Log.i(TAG, "Added");
+
         View view =  inflater.inflate(R.layout.fragment_history, container, false);
 
-        String[] members = { "お店", "お店", "kacchi0516", "kobashinG",
-                "seit", "kei_i_t", "furusin_oriver" };
+        String[] members = { "タント タント オステリア", "Bar de Boo", "MEDUSA | 恵比寿のイタリアン", "ChimChim",
+                "スパッカ アルバータ エビス", "昇月庵", "キッチン・ボン" };
         ListView list = (ListView)view.findViewById(R.id.history_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_expandable_list_item_1, members);
