@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,6 +49,19 @@ public class MapsActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private String[] mTitles;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int position) {
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
