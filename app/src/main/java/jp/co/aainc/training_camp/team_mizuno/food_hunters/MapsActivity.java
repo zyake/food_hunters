@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -24,11 +25,11 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.LatLngs;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.managers.MapManager;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.restaurants.SearchRequest;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.tasks.RestaurantSearchAsyncTask;
 import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.DefaultLocationListener;
+import jp.co.aainc.training_camp.team_mizuno.food_hunters.utils.LatLngs;
 
 import static android.location.LocationManager.GPS_PROVIDER;
 
@@ -209,7 +210,7 @@ public class MapsActivity extends ActionBarActivity {
             mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             map = mapFragment.getMap();
             if (mapManager == null) {
-                mapManager = new MapManager(map);
+                mapManager = new MapManager(map, this);
             }
             mapManager.setMap(map);
         }
@@ -232,9 +233,11 @@ public class MapsActivity extends ActionBarActivity {
         Location lastKnownLocation = locManager.getLastKnownLocation(GPS_PROVIDER);
         if (lastKnownLocation == null) {
             lastKnownLocation = new Location(GPS_PROVIDER);
+            lastKnownLocation.setLatitude(35.681382);
+            lastKnownLocation.setLongitude(139.766084);
         }
 
-        mapManager.replaceCurrent(new Location(GPS_PROVIDER), MARKER_TITLE);
+        mapManager.replaceCurrent(lastKnownLocation, MARKER_TITLE);
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
@@ -246,7 +249,7 @@ public class MapsActivity extends ActionBarActivity {
 
         startAsync(LatLngs.fromLocation(lastKnownLocation));
 
-        locManager.requestLocationUpdates(GPS_PROVIDER, 1000, 5,
+        locManager.requestLocationUpdates(GPS_PROVIDER, 1000, 100,
             new DefaultLocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
