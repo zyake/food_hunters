@@ -14,4 +14,10 @@
             android:layout_height="wrap_content"
             android:text="OK"
             android:id="@+id/ok_button" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50 point earned"
+            android:id="@+id/textView2"
+            android:textSize="30dp" android:layout_below="@+id/textView" android:layout_centerHorizontal="true"/>
 </RelativeLayout>
