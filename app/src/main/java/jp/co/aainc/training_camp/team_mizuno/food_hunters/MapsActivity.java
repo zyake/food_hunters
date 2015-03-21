@@ -82,7 +82,7 @@ public class MapsActivity extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-    
+
     private void setUpDrawer() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
